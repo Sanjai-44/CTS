@@ -7,21 +7,15 @@ Commercial Analytics Market Share & Share-Shift Tracker
 
 import os
 import google.generativeai as genai
-from config import BASE_DIR
+from config import BASE_DIR, GEMINI_API_KEY, get_secret
 
-# Load .env configuration
-dotenv_path = os.path.join(BASE_DIR, ".env")
-if os.path.exists(dotenv_path):
-    with open(dotenv_path, "r") as f:
-        for line in f:
-            if line.strip() and not line.startswith("#") and "=" in line:
-                k, v = line.strip().split("=", 1)
-                os.environ[k.strip()] = v.strip()
+api_key = GEMINI_API_KEY or get_secret("GEMINI_API_KEY", "")
+if api_key:
+    try:
+        genai.configure(api_key=api_key)
+    except Exception as e:
+        print(f"[LLM Agent] Failed to configure Gemini API: {e}")
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
 
 SYSTEM_PROMPT = """
 You are an expert Commercial Analytics AI Consultant specializing in Pharmaceutical Market Share, Competitive Intelligence, and Time-Series Forecasting.

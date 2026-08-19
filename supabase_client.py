@@ -19,13 +19,7 @@ from market_share_engine import calculate_market_share
 from share_shift_engine import calculate_share_shifts
 from anomaly_engine import detect_statistical_anomalies
 from alert_engine import generate_market_alerts
-from config import DATASET_PATH
-
-# Load credentials from .env
-load_dotenv()
-
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://rtaeoyzaghgeluqouboa.supabase.co")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY", "sb_publishable_OAjEA7Pu8cl54oW-YJzdig_VqGztdwi")
+from config import DATASET_PATH, SUPABASE_URL, SUPABASE_KEY
 
 class SupabaseLiveDatabaseEngine:
     """
